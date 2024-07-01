@@ -28,6 +28,17 @@ const Todo = () => {
     setData("");
   };
 
+  const handleDeleteTodo = (value) => {
+    // console.log(task);
+    // console.log(value);
+    const deleteTodo = task.filter((item) => item !== value);
+    setTask(deleteTodo);
+  };
+
+  const handleClearAllTask = () => {
+    setTask([]);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setDateTime(new Date());
@@ -66,19 +77,22 @@ const Todo = () => {
           </div>
         </form>
       </section>
-      <section className="w-full mt-2">
+      <section className="w-full mt-2 h-[50vh] border overflow-x-auto rounded-sm border-black p-2">
         <ul className="w-full">
           {task.map((item, index) => {
             return (
               <li
                 key={index}
-                className="w-full flex justify-between items-center rounded-sm mt-5 text-xl border-b text-white bg-black p-2 px-4"
+                className="w-full flex justify-between items-center rounded-sm mb-1 text-xl border-b text-white bg-black p-2 px-4"
               >
                 <span className="">{item}</span>
                 {/* <button className="p-2 bg-black text-white rounded-full">
                   <FaCheck />
                 </button> */}
-                <button className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 duration-300">
+                <button
+                  onClick={() => handleDeleteTodo(item)}
+                  className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 duration-300"
+                >
                   <MdDeleteForever />
                 </button>
               </li>
@@ -86,6 +100,14 @@ const Todo = () => {
           })}
         </ul>
       </section>
+      <div className="w-full mx-auto mt-4">
+        <button
+          className="bg-red-500 px-3 py-2 rounded-sm text-slate-200"
+          onClick={handleClearAllTask}
+        >
+          Clear All Task
+        </button>
+      </div>
     </section>
   );
 };
